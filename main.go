@@ -28,13 +28,17 @@ func main() {
 	secretKey := os.Getenv("SECRET_KEY")
 	commentoURL := os.Getenv("COMMENTO_URL")
 
+	if keycloakURL == "" || keycloakRealm == "" || keycloakClientID == "" ||
+		secretKey == "" || commentoURL == "" {
+		log.Fatal("check env")
+	}
+
 	rawSecretKey, err := hex.DecodeString(secretKey)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	r := gin.Default()
-	r.LoadHTMLGlob("*")
 	r.StaticFile("/keycloak.min.js", "keycloak.min.js")
 	r.StaticFile("/login", "login.html")
 
