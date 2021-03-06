@@ -50,7 +50,7 @@ def handle-GET:
 - Keycloak Client id
 
 ### SECRET_KEY
-- Keycloak secret key
+- HMAC secret key
 
 ### COMMENTO_URL
 - commento url
