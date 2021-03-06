@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="keycloak.min.js"></script>
+        <script>
+            const onLoad = (function() {
+                //URL에서 토큰 추출
+                var params = new URLSearchParams(location.search);
+                var token = params.get('token');
+                var keycloakURL = params.get('keycloak_url');
+                var keycloakRealm = params.get('keycloak_realm');
+                var keycloakClientID = params.get('keycloak_clientID');
+
+                keycloakURL = keycloakURL+ "/auth";
+
+                function initKeycloak() {
+                    var keycloak = new Keycloak({
+                        url: keycloakURL,
+                        realm: keycloakRealm,
+                        clientId: keycloakClientID
+                    });
+
+                    keycloak.init({onLoad: 'login-required'}).then(function(authenticated) {
+                        var user = keycloak.tokenParsed.preferred_username;
+                        var email = keycloak.tokenParsed.email;
+
+                        window.location.href = '/post?name='+user+'&email='+email+'&token='+token;
+                    }).catch(function() {
+                        alert('failed to initialize');
+                    });
+                }
+                return initKeycloak;
+            })();
+        </script>
+    </head>
+    <body onLoad="onLoad();"></body>
+</html>
