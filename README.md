@@ -55,3 +55,13 @@ def handle-GET:
 ### COMMENTO_URL
 - commento url
 - https://my-commento.com
+
+## Docker
+```
+docker run my/commento-keycloak
+ -e KEYCLOAK_URL=https://keycloak \
+ -e KEYCLOAK_REALM=myrealm \
+ -e KEYCLOAK_CLIENT_ID=commento-keycloak \
+ -e SECRET_KEY=hmacsecrekey1234 \
+ -e COMMENTO_URL=https://my-commento.com \
+```
